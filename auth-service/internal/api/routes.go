@@ -1,12 +1,19 @@
 package api
 
 import (
+	"database/sql"
 	"net/http"
 
+	"github.com/MarkMarda/auth-service/internal/data"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
 )
+
+type Config struct {
+	DB     *sql.DB
+	Models data.Models
+}
 
 func (app *Config) Routes() http.Handler {
 	mux := chi.NewRouter()
@@ -26,9 +33,7 @@ func (app *Config) Routes() http.Handler {
 
 	mux.Use(middleware.Heartbeat("/ping"))
 
-	mux.Post("/", app.BrokerHandler)
-
-	mux.Post("/handle", app.HandleSubmission)
+	mux.Post("/authenticate", app.Authenticate)
 
 	return mux
 }

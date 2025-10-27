@@ -44,3 +44,5 @@ go.work.sum
 **/brokerApp
 **/bin/
 **/tmp/
+
+db-data/
